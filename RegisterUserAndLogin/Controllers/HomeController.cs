@@ -56,7 +56,6 @@ namespace UserandLogin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(User users)
         {
- 
                     var obj = db.Users.Where(u => u.User_Name.Equals(users.User_Name) && u.Password.Equals(users.Password)).FirstOrDefault();
                     if (obj != null)
                     {
