@@ -56,10 +56,7 @@ namespace UserandLogin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(User users)
         {
-            if (ModelState.IsValid)
-            {
-                using (DataContext db = new DataContext())
-                {
+ 
                     var obj = db.Users.Where(u => u.User_Name.Equals(users.User_Name) && u.Password.Equals(users.Password)).FirstOrDefault();
                     if (obj != null)
                     {
@@ -71,9 +68,7 @@ namespace UserandLogin.Controllers
                     {
                         ModelState.AddModelError("", "User Name or Password is Invalid");
                     }
-                }
-            }
-            return View(users);
+            return View();
         }
         public ActionResult LoggedIn()
         {
@@ -85,6 +80,13 @@ namespace UserandLogin.Controllers
             {
                 return RedirectToAction("Login");
             }
+        }
+        public ActionResult LogOut()
+        {
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+            return RedirectToAction("Login");
         }
     }
 }
