@@ -15,7 +15,12 @@ namespace UserandLogin.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            string successMessage = TempData["SuccessMessage"] as string;
+            if (!string.IsNullOrEmpty(successMessage))
+            {
+                ViewBag.SuccessMessage = successMessage;
+            }
+            return View();
         }
 
         public ActionResult Edit(int Id)
@@ -30,7 +35,7 @@ namespace UserandLogin.Controllers
             int obj = db.SaveChanges();
             if(obj > 0)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("LoggedIn");
             }
             else
             {
@@ -75,6 +80,7 @@ namespace UserandLogin.Controllers
             {
                 db.Users.Add(usr);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = "Your data added successfully.Click Login to proceed...";
                 return RedirectToAction("Index");
             }
             else
