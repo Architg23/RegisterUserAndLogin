@@ -1,6 +1,7 @@
 ﻿using RegisterUserAndLogin.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,16 +17,50 @@ namespace UserandLogin.Controllers
         {
             return View(db.Users.ToList());
         }
+
+        public ActionResult Edit(int Id)
+        {
+            var obj = db.Users.Where(u => u.User_Id == Id).FirstOrDefault();
+            return View(obj);
+        }
+        [HttpPost]
+        public ActionResult Edit(User users)
+        {
+            db.Entry(users).State = EntityState.Modified;
+            int obj = db.SaveChanges();
+            if(obj > 0)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.EditMsg = ("<script>alert('Something Went Wrong..')</script>");
+            }
+            return View();
+        }
+
+        public ActionResult Delete(int Id)
+        {
+            User obj = db.Users.Where(u => u.User_Id == Id).FirstOrDefault();
+            return View(obj);
+        }
+        [HttpPost]
+        public ActionResult Delete(User users)
+        {
+                db.Users.Remove(users);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+        }
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "About Us.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact.";
 
             return View();
         }
@@ -73,7 +108,7 @@ namespace UserandLogin.Controllers
         {
             if (Session["User_Name"] != null)
             {
-                return View();
+                return View(db.Users.ToList());
             }
             else
             {
