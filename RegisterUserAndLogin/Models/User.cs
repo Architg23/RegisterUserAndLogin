@@ -29,6 +29,7 @@ namespace UserandLogin.Models
         public string Password { get; set; }
         [Required]
         [Display(Name = "Contact")]
+        [RegularExpression(@"^\d{10}$" , ErrorMessage = " Contact must be of 10 digit.")]
         public string Contact { get; set; }
     }
 }

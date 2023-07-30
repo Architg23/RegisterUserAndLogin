@@ -6,7 +6,11 @@
 }
 
 <h2>Register</h2>
-
+<style>
+    body {
+        background-image: url("https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");
+    }
+</style>
 
 @using (Html.BeginForm()) 
 {
@@ -66,14 +70,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Register" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Have an Account", "Login")
+    @Html.ActionLink("Have an Account", "Login", null, new { style = "color: darkgray;" })
 </div>
 
 @section Scripts {
