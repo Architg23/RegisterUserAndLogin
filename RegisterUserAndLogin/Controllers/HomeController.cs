@@ -44,17 +44,13 @@ namespace UserandLogin.Controllers
             return View();
         }
 
-        public ActionResult Delete(int Id)
+       public ActionResult Delete(int Id)
         {
-            User obj = db.Users.Where(u => u.User_Id == Id).FirstOrDefault();
-            return View(obj);
-        }
-        [HttpPost]
-        public ActionResult Delete(User users)
-        {
-                db.Users.Remove(users);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            var obj = db.Users.Where(u => u.User_Id == Id).FirstOrDefault();
+            db.Users.Remove(obj);
+            db.SaveChanges();
+            ViewBag.Message = "Record Deleted Successfully";
+            return RedirectToAction("LoggedIn");
         }
         public ActionResult About()
         {
@@ -100,7 +96,6 @@ namespace UserandLogin.Controllers
                     var obj = db.Users.Where(u => u.User_Name.Equals(users.User_Name) && u.Password.Equals(users.Password)).FirstOrDefault();
                     if (obj != null)
                     {
-                        Session["User Id"] = obj.User_Id.ToString();
                         Session["User_Name"] = obj.User_Name.ToString();
                         return RedirectToAction("LoggedIn");
                     }
